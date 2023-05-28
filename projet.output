@@ -1,0 +1,1005 @@
+Terminals unused in grammar
+
+    POINT
+    APOSTROPHE
+    SP
+
+
+Grammar
+
+    0 $accept: requete $end
+
+    1 requete: select_clause from_clause where_clause POINTVIRGULE
+    2        | create_clause POINTVIRGULE
+    3        | delete_clause POINTVIRGULE
+    4        | update_clause POINTVIRGULE
+
+    5 $@1: ε
+
+    6 select_clause: SELECT champs FROM ID $@1
+
+    7 $@2: ε
+
+    8 select_clause: SELECT ETOILE FROM ID $@2
+
+    9 champs: ID
+   10       | champs VIRG ID
+
+   11 from_clause: FROM ID
+
+   12 where_clause: WHERE condition
+
+   13 condition: comparaison
+   14          | PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE
+   15          | condition PLUS condition
+   16          | condition MOINS condition
+   17          | condition DIV condition
+   18          | condition ET condition
+   19          | condition OU condition
+
+   20 comparaison: expression EGAL expression
+   21            | expression INF expression
+   22            | expression SUP expression
+   23            | expression INFEGAL expression
+   24            | expression SUPEGAL expression
+   25            | expression EGAL_EQUAL expression
+
+   26 expression: ID
+   27           | NUM
+   28           | TRUE
+   29           | FALSE
+
+   30 create_clause: CREATE TABLE ID PARENTHESE_OUVRANTE table_column_list PARENTHESE_FERMANTE
+
+   31 table_column_list: table_column
+   32                  | table_column PRIMARY_KEY
+   33                  | table_column_list VIRG table_column
+
+   34 table_column: ID DATATYPE
+   35             | ID DATATYPE PARENTHESE_OUVRANTE NUM PARENTHESE_FERMANTE
+
+   36 delete_clause: DELETE FROM ID WHERE condition
+
+   37 update_clause: UPDATE ID SET ID EGAL expression WHERE condition
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    SELECT (258) 6 8
+    FROM (259) 6 8 11 36
+    WHERE (260) 12 36 37
+    CREATE (261) 30
+    DELETE (262) 36
+    UPDATE (263) 37
+    SET (264) 37
+    VIRG (265) 10 33
+    ETOILE (266) 8
+    EGAL (267) 20 37
+    INF (268) 21
+    SUP (269) 22
+    INFEGAL (270) 23
+    SUPEGAL (271) 24
+    ET (272) 18
+    OU (273) 19
+    EGAL_EQUAL (274) 25
+    PARENTHESE_OUVRANTE (275) 14 30 35
+    PARENTHESE_FERMANTE (276) 14 30 35
+    PLUS (277) 15
+    MOINS (278) 16
+    DIV (279) 17
+    POINT (280)
+    APOSTROPHE (281)
+    POINTVIRGULE (282) 1 2 3 4
+    TRUE (283) 28
+    FALSE (284) 29
+    TABLE (285) 30
+    PRIMARY_KEY (286) 32
+    DATATYPE (287) 34 35
+    SP (288)
+    ID <strval> (289) 6 8 9 10 11 26 30 34 35 36 37
+    NUM <numval> (290) 27 35
+
+
+Nonterminals, with rules where they appear
+
+    $accept (36)
+        on left: 0
+    requete (37)
+        on left: 1 2 3 4
+        on right: 0
+    select_clause (38)
+        on left: 6 8
+        on right: 1
+    $@1 (39)
+        on left: 5
+        on right: 6
+    $@2 (40)
+        on left: 7
+        on right: 8
+    champs (41)
+        on left: 9 10
+        on right: 6 10
+    from_clause (42)
+        on left: 11
+        on right: 1
+    where_clause (43)
+        on left: 12
+        on right: 1
+    condition (44)
+        on left: 13 14 15 16 17 18 19
+        on right: 12 14 15 16 17 18 19 36 37
+    comparaison (45)
+        on left: 20 21 22 23 24 25
+        on right: 13
+    expression (46)
+        on left: 26 27 28 29
+        on right: 20 21 22 23 24 25 37
+    create_clause (47)
+        on left: 30
+        on right: 2
+    table_column_list (48)
+        on left: 31 32 33
+        on right: 30 33
+    table_column (49)
+        on left: 34 35
+        on right: 31 32 33
+    delete_clause (50)
+        on left: 36
+        on right: 3
+    update_clause (51)
+        on left: 37
+        on right: 4
+
+
+State 0
+
+    0 $accept: • requete $end
+
+    SELECT  shift, and go to state 1
+    CREATE  shift, and go to state 2
+    DELETE  shift, and go to state 3
+    UPDATE  shift, and go to state 4
+
+    requete        go to state 5
+    select_clause  go to state 6
+    create_clause  go to state 7
+    delete_clause  go to state 8
+    update_clause  go to state 9
+
+
+State 1
+
+    6 select_clause: SELECT • champs FROM ID $@1
+    8              | SELECT • ETOILE FROM ID $@2
+
+    ETOILE  shift, and go to state 10
+    ID      shift, and go to state 11
+
+    champs  go to state 12
+
+
+State 2
+
+   30 create_clause: CREATE • TABLE ID PARENTHESE_OUVRANTE table_column_list PARENTHESE_FERMANTE
+
+    TABLE  shift, and go to state 13
+
+
+State 3
+
+   36 delete_clause: DELETE • FROM ID WHERE condition
+
+    FROM  shift, and go to state 14
+
+
+State 4
+
+   37 update_clause: UPDATE • ID SET ID EGAL expression WHERE condition
+
+    ID  shift, and go to state 15
+
+
+State 5
+
+    0 $accept: requete • $end
+
+    $end  shift, and go to state 16
+
+
+State 6
+
+    1 requete: select_clause • from_clause where_clause POINTVIRGULE
+
+    FROM  shift, and go to state 17
+
+    from_clause  go to state 18
+
+
+State 7
+
+    2 requete: create_clause • POINTVIRGULE
+
+    POINTVIRGULE  shift, and go to state 19
+
+
+State 8
+
+    3 requete: delete_clause • POINTVIRGULE
+
+    POINTVIRGULE  shift, and go to state 20
+
+
+State 9
+
+    4 requete: update_clause • POINTVIRGULE
+
+    POINTVIRGULE  shift, and go to state 21
+
+
+State 10
+
+    8 select_clause: SELECT ETOILE • FROM ID $@2
+
+    FROM  shift, and go to state 22
+
+
+State 11
+
+    9 champs: ID •
+
+    $default  reduce using rule 9 (champs)
+
+
+State 12
+
+    6 select_clause: SELECT champs • FROM ID $@1
+   10 champs: champs • VIRG ID
+
+    FROM  shift, and go to state 23
+    VIRG  shift, and go to state 24
+
+
+State 13
+
+   30 create_clause: CREATE TABLE • ID PARENTHESE_OUVRANTE table_column_list PARENTHESE_FERMANTE
+
+    ID  shift, and go to state 25
+
+
+State 14
+
+   36 delete_clause: DELETE FROM • ID WHERE condition
+
+    ID  shift, and go to state 26
+
+
+State 15
+
+   37 update_clause: UPDATE ID • SET ID EGAL expression WHERE condition
+
+    SET  shift, and go to state 27
+
+
+State 16
+
+    0 $accept: requete $end •
+
+    $default  accept
+
+
+State 17
+
+   11 from_clause: FROM • ID
+
+    ID  shift, and go to state 28
+
+
+State 18
+
+    1 requete: select_clause from_clause • where_clause POINTVIRGULE
+
+    WHERE  shift, and go to state 29
+
+    where_clause  go to state 30
+
+
+State 19
+
+    2 requete: create_clause POINTVIRGULE •
+
+    $default  reduce using rule 2 (requete)
+
+
+State 20
+
+    3 requete: delete_clause POINTVIRGULE •
+
+    $default  reduce using rule 3 (requete)
+
+
+State 21
+
+    4 requete: update_clause POINTVIRGULE •
+
+    $default  reduce using rule 4 (requete)
+
+
+State 22
+
+    8 select_clause: SELECT ETOILE FROM • ID $@2
+
+    ID  shift, and go to state 31
+
+
+State 23
+
+    6 select_clause: SELECT champs FROM • ID $@1
+
+    ID  shift, and go to state 32
+
+
+State 24
+
+   10 champs: champs VIRG • ID
+
+    ID  shift, and go to state 33
+
+
+State 25
+
+   30 create_clause: CREATE TABLE ID • PARENTHESE_OUVRANTE table_column_list PARENTHESE_FERMANTE
+
+    PARENTHESE_OUVRANTE  shift, and go to state 34
+
+
+State 26
+
+   36 delete_clause: DELETE FROM ID • WHERE condition
+
+    WHERE  shift, and go to state 35
+
+
+State 27
+
+   37 update_clause: UPDATE ID SET • ID EGAL expression WHERE condition
+
+    ID  shift, and go to state 36
+
+
+State 28
+
+   11 from_clause: FROM ID •
+
+    $default  reduce using rule 11 (from_clause)
+
+
+State 29
+
+   12 where_clause: WHERE • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 42
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 30
+
+    1 requete: select_clause from_clause where_clause • POINTVIRGULE
+
+    POINTVIRGULE  shift, and go to state 45
+
+
+State 31
+
+    8 select_clause: SELECT ETOILE FROM ID • $@2
+
+    $default  reduce using rule 7 ($@2)
+
+    $@2  go to state 46
+
+
+State 32
+
+    6 select_clause: SELECT champs FROM ID • $@1
+
+    $default  reduce using rule 5 ($@1)
+
+    $@1  go to state 47
+
+
+State 33
+
+   10 champs: champs VIRG ID •
+
+    $default  reduce using rule 10 (champs)
+
+
+State 34
+
+   30 create_clause: CREATE TABLE ID PARENTHESE_OUVRANTE • table_column_list PARENTHESE_FERMANTE
+
+    ID  shift, and go to state 48
+
+    table_column_list  go to state 49
+    table_column       go to state 50
+
+
+State 35
+
+   36 delete_clause: DELETE FROM ID WHERE • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 51
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 36
+
+   37 update_clause: UPDATE ID SET ID • EGAL expression WHERE condition
+
+    EGAL  shift, and go to state 52
+
+
+State 37
+
+   14 condition: PARENTHESE_OUVRANTE • condition PARENTHESE_FERMANTE
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 53
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 38
+
+   28 expression: TRUE •
+
+    $default  reduce using rule 28 (expression)
+
+
+State 39
+
+   29 expression: FALSE •
+
+    $default  reduce using rule 29 (expression)
+
+
+State 40
+
+   26 expression: ID •
+
+    $default  reduce using rule 26 (expression)
+
+
+State 41
+
+   27 expression: NUM •
+
+    $default  reduce using rule 27 (expression)
+
+
+State 42
+
+   12 where_clause: WHERE condition •
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+
+    ET     shift, and go to state 54
+    OU     shift, and go to state 55
+    PLUS   shift, and go to state 56
+    MOINS  shift, and go to state 57
+    DIV    shift, and go to state 58
+
+    $default  reduce using rule 12 (where_clause)
+
+
+State 43
+
+   13 condition: comparaison •
+
+    $default  reduce using rule 13 (condition)
+
+
+State 44
+
+   20 comparaison: expression • EGAL expression
+   21            | expression • INF expression
+   22            | expression • SUP expression
+   23            | expression • INFEGAL expression
+   24            | expression • SUPEGAL expression
+   25            | expression • EGAL_EQUAL expression
+
+    EGAL        shift, and go to state 59
+    INF         shift, and go to state 60
+    SUP         shift, and go to state 61
+    INFEGAL     shift, and go to state 62
+    SUPEGAL     shift, and go to state 63
+    EGAL_EQUAL  shift, and go to state 64
+
+
+State 45
+
+    1 requete: select_clause from_clause where_clause POINTVIRGULE •
+
+    $default  reduce using rule 1 (requete)
+
+
+State 46
+
+    8 select_clause: SELECT ETOILE FROM ID $@2 •
+
+    $default  reduce using rule 8 (select_clause)
+
+
+State 47
+
+    6 select_clause: SELECT champs FROM ID $@1 •
+
+    $default  reduce using rule 6 (select_clause)
+
+
+State 48
+
+   34 table_column: ID • DATATYPE
+   35             | ID • DATATYPE PARENTHESE_OUVRANTE NUM PARENTHESE_FERMANTE
+
+    DATATYPE  shift, and go to state 65
+
+
+State 49
+
+   30 create_clause: CREATE TABLE ID PARENTHESE_OUVRANTE table_column_list • PARENTHESE_FERMANTE
+   33 table_column_list: table_column_list • VIRG table_column
+
+    VIRG                 shift, and go to state 66
+    PARENTHESE_FERMANTE  shift, and go to state 67
+
+
+State 50
+
+   31 table_column_list: table_column •
+   32                  | table_column • PRIMARY_KEY
+
+    PRIMARY_KEY  shift, and go to state 68
+
+    $default  reduce using rule 31 (table_column_list)
+
+
+State 51
+
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+   36 delete_clause: DELETE FROM ID WHERE condition •
+
+    ET     shift, and go to state 54
+    OU     shift, and go to state 55
+    PLUS   shift, and go to state 56
+    MOINS  shift, and go to state 57
+    DIV    shift, and go to state 58
+
+    $default  reduce using rule 36 (delete_clause)
+
+
+State 52
+
+   37 update_clause: UPDATE ID SET ID EGAL • expression WHERE condition
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 69
+
+
+State 53
+
+   14 condition: PARENTHESE_OUVRANTE condition • PARENTHESE_FERMANTE
+   15          | condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+
+    ET                   shift, and go to state 54
+    OU                   shift, and go to state 55
+    PARENTHESE_FERMANTE  shift, and go to state 70
+    PLUS                 shift, and go to state 56
+    MOINS                shift, and go to state 57
+    DIV                  shift, and go to state 58
+
+
+State 54
+
+   18 condition: condition ET • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 71
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 55
+
+   19 condition: condition OU • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 72
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 56
+
+   15 condition: condition PLUS • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 73
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 57
+
+   16 condition: condition MOINS • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 74
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 58
+
+   17 condition: condition DIV • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 75
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 59
+
+   20 comparaison: expression EGAL • expression
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 76
+
+
+State 60
+
+   21 comparaison: expression INF • expression
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 77
+
+
+State 61
+
+   22 comparaison: expression SUP • expression
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 78
+
+
+State 62
+
+   23 comparaison: expression INFEGAL • expression
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 79
+
+
+State 63
+
+   24 comparaison: expression SUPEGAL • expression
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 80
+
+
+State 64
+
+   25 comparaison: expression EGAL_EQUAL • expression
+
+    TRUE   shift, and go to state 38
+    FALSE  shift, and go to state 39
+    ID     shift, and go to state 40
+    NUM    shift, and go to state 41
+
+    expression  go to state 81
+
+
+State 65
+
+   34 table_column: ID DATATYPE •
+   35             | ID DATATYPE • PARENTHESE_OUVRANTE NUM PARENTHESE_FERMANTE
+
+    PARENTHESE_OUVRANTE  shift, and go to state 82
+
+    $default  reduce using rule 34 (table_column)
+
+
+State 66
+
+   33 table_column_list: table_column_list VIRG • table_column
+
+    ID  shift, and go to state 48
+
+    table_column  go to state 83
+
+
+State 67
+
+   30 create_clause: CREATE TABLE ID PARENTHESE_OUVRANTE table_column_list PARENTHESE_FERMANTE •
+
+    $default  reduce using rule 30 (create_clause)
+
+
+State 68
+
+   32 table_column_list: table_column PRIMARY_KEY •
+
+    $default  reduce using rule 32 (table_column_list)
+
+
+State 69
+
+   37 update_clause: UPDATE ID SET ID EGAL expression • WHERE condition
+
+    WHERE  shift, and go to state 84
+
+
+State 70
+
+   14 condition: PARENTHESE_OUVRANTE condition PARENTHESE_FERMANTE •
+
+    $default  reduce using rule 14 (condition)
+
+
+State 71
+
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   18          | condition ET condition •
+   19          | condition • OU condition
+
+    OU  shift, and go to state 55
+
+    $default  reduce using rule 18 (condition)
+
+
+State 72
+
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+   19          | condition OU condition •
+
+    $default  reduce using rule 19 (condition)
+
+
+State 73
+
+   15 condition: condition • PLUS condition
+   15          | condition PLUS condition •
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+
+    ET     shift, and go to state 54
+    OU     shift, and go to state 55
+    MOINS  shift, and go to state 57
+    DIV    shift, and go to state 58
+
+    $default  reduce using rule 15 (condition)
+
+
+State 74
+
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   16          | condition MOINS condition •
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+
+    ET   shift, and go to state 54
+    OU   shift, and go to state 55
+    DIV  shift, and go to state 58
+
+    $default  reduce using rule 16 (condition)
+
+
+State 75
+
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   17          | condition DIV condition •
+   18          | condition • ET condition
+   19          | condition • OU condition
+
+    ET  shift, and go to state 54
+    OU  shift, and go to state 55
+
+    $default  reduce using rule 17 (condition)
+
+
+State 76
+
+   20 comparaison: expression EGAL expression •
+
+    $default  reduce using rule 20 (comparaison)
+
+
+State 77
+
+   21 comparaison: expression INF expression •
+
+    $default  reduce using rule 21 (comparaison)
+
+
+State 78
+
+   22 comparaison: expression SUP expression •
+
+    $default  reduce using rule 22 (comparaison)
+
+
+State 79
+
+   23 comparaison: expression INFEGAL expression •
+
+    $default  reduce using rule 23 (comparaison)
+
+
+State 80
+
+   24 comparaison: expression SUPEGAL expression •
+
+    $default  reduce using rule 24 (comparaison)
+
+
+State 81
+
+   25 comparaison: expression EGAL_EQUAL expression •
+
+    $default  reduce using rule 25 (comparaison)
+
+
+State 82
+
+   35 table_column: ID DATATYPE PARENTHESE_OUVRANTE • NUM PARENTHESE_FERMANTE
+
+    NUM  shift, and go to state 85
+
+
+State 83
+
+   33 table_column_list: table_column_list VIRG table_column •
+
+    $default  reduce using rule 33 (table_column_list)
+
+
+State 84
+
+   37 update_clause: UPDATE ID SET ID EGAL expression WHERE • condition
+
+    PARENTHESE_OUVRANTE  shift, and go to state 37
+    TRUE                 shift, and go to state 38
+    FALSE                shift, and go to state 39
+    ID                   shift, and go to state 40
+    NUM                  shift, and go to state 41
+
+    condition    go to state 86
+    comparaison  go to state 43
+    expression   go to state 44
+
+
+State 85
+
+   35 table_column: ID DATATYPE PARENTHESE_OUVRANTE NUM • PARENTHESE_FERMANTE
+
+    PARENTHESE_FERMANTE  shift, and go to state 87
+
+
+State 86
+
+   15 condition: condition • PLUS condition
+   16          | condition • MOINS condition
+   17          | condition • DIV condition
+   18          | condition • ET condition
+   19          | condition • OU condition
+   37 update_clause: UPDATE ID SET ID EGAL expression WHERE condition •
+
+    ET     shift, and go to state 54
+    OU     shift, and go to state 55
+    PLUS   shift, and go to state 56
+    MOINS  shift, and go to state 57
+    DIV    shift, and go to state 58
+
+    $default  reduce using rule 37 (update_clause)
+
+
+State 87
+
+   35 table_column: ID DATATYPE PARENTHESE_OUVRANTE NUM PARENTHESE_FERMANTE •
+
+    $default  reduce using rule 35 (table_column)
